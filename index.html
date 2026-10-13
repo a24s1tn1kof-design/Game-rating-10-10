@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Оценить игры</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background: #121212;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  .header {
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 2px solid #2a2a2a;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .game-card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 25px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    border: 1px solid #2a2a2a;
+    text-align: center;
+  }
+
+  .game-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    display: block;
+  }
+
+  .game-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .star {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: transform 0.15s, fill 0.15s;
+    fill: #3a3a3a;
+  }
+
+  .star:hover {
+    transform: scale(1.15);
+  }
+
+  .star.active {
+    fill: #f5c518;
+  }
+
+  .score-text {
+    font-size: 16px;
+    color: #aaaaaa;
+    margin-bottom: 15px;
+    min-height: 22px;
+  }
+
+  .thanks {
+    font-size: 18px;
+    color: #4caf50;
+    font-weight: bold;
+    margin-top: 15px;
+    min-height: 24px;
+  }
+
+  .already-voted {
+    font-size: 15px;
+    color: #aaaaaa;
+    margin-top: 15px;
+  }
+
+  .disabled .star {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .disabled .star:hover {
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">Оценить игры</div>
+
+  <div class="game-card" id="gameCard">
+    <!-- Своя иконка игры (джойстик) -->
+    <svg class="game-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 6h10a5 5 0 0 1 4.9 4l1 5a3 3 0 0 1-5.2 2.5L16 16H8l-1.7 1.5A3 3 0 0 1 1.1 15l1-5A5 5 0 0 1 7 6zm0 2a3 3 0 0 0-2.9 2.4l-1 5a1 1 0 0 0 1.7.8L7 14h10l2.2 2.2a1 1 0 0 0 1.7-.8l-1-5A3 3 0 0 0 17 8H7zm1 2v2H6v2h2v2h2v-2h2v-2h-2v-2H8zm8 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-2 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill="#f5c518"/>
+    </svg>
+
+    <div class="game-title">Standoff 2 mini 3D</div>
+
+    <div class="stars" id="stars">
+      <!-- 10 звёзд -->
+      <svg class="star" data-value="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="3" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="4" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="6" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="7" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="8" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="9" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" data-value="10" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+
+    <div class="score-text" id="scoreText">Нажмите на звезду, чтобы оценить</div>
+    <div class="thanks" id="thanks"></div>
+    <div class="already-voted" id="alreadyVoted"></div>
+  </div>
+
+<script>
+  const GAME_ID = "standoff2_mini_3d";
+  const STORAGE_KEY = "rating_" + GAME_ID;
+
+  const starsContainer = document.getElementById("stars");
+  const stars = starsContainer.querySelectorAll(".star");
+  const scoreText = document.getElementById("scoreText");
+  const thanks = document.getElementById("thanks");
+  const alreadyVoted = document.getElementById("alreadyVoted");
+  const gameCard = document.getElementById("gameCard");
+
+  let currentRating = 0;
+
+  // Проверка, голосовал ли пользователь
+  function hasVoted() {
+    return localStorage.getItem(STORAGE_KEY) !== null;
+  }
+
+  // Отрисовка звёзд до определённого значения
+  function paintStars(value) {
+    stars.forEach(star => {
+      const v = parseInt(star.dataset.value);
+      if (v <= value) {
+        star.classList.add("active");
+      } else {
+        star.classList.remove("active");
+      }
+    });
+  }
+
+  // Заблокировать возможность голосования
+  function lockVoting() {
+    gameCard.classList.add("disabled");
+    stars.forEach(star => {
+      star.style.pointerEvents = "none";
+    });
+  }
+
+  // Показать состояние "уже голосовали"
+  function showAlreadyVoted(savedValue) {
+    paintStars(savedValue);
+    scoreText.textContent = "Ваша оценка: " + savedValue + " из 10";
+    alreadyVoted.textContent = "Вы уже оценили эту игру. Спасибо!";
+    thanks.textContent = "";
+    lockVoting();
+  }
+
+  // Обработка наведения (для подсветки)
+  stars.forEach(star => {
+    star.addEventListener("mouseenter", () => {
+      if (hasVoted()) return;
+      const value = parseInt(star.dataset.value);
+      paintStars(value);
+      scoreText.textContent = value + " из 10";
+    });
+
+    star.addEventListener("mouseleave", () => {
+      if (hasVoted()) return;
+      paintStars(currentRating);
+      if (currentRating === 0) {
+        scoreText.textContent = "Нажмите на звезду, чтобы оценить";
+      } else {
+        scoreText.textContent = currentRating + " из 10";
+      }
+    });
+
+    star.addEventListener("click", () => {
+      if (hasVoted()) return;
+
+      const value = parseInt(star.dataset.value);
+      currentRating = value;
+      paintStars(value);
+
+      // Сохраняем голос
+      localStorage.setItem(STORAGE_KEY, value);
+
+      scoreText.textContent = "Ваша оценка: " + value + " из 10";
+      thanks.textContent = "Спасибо что оценили нашу игру!";
+      lockVoting();
+    });
+  });
+
+  // Инициализация при загрузке
+  window.addEventListener("DOMContentLoaded", () => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved !== null) {
+      showAlreadyVoted(parseInt(saved));
+    }
+  });
+</script>
+
+</body>
+  </html>
